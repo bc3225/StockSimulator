@@ -28,7 +28,7 @@ public class GUIroughdraft {
 	/**
 	 * @wbp.nonvisual location=53,14
 	 */
-	private final JLabel lblBgszStockSimulator = DefaultComponentFactory.getInstance().createTitle("BGSZ Stock Simulator");
+	//private final JLabel lblBgszStockSimulator = DefaultComponentFactory.getInstance().createTitle("BGSZ Stock Simulator");
 	private JTextField txtEnterYourText;
 	private JTable table;
 
@@ -80,6 +80,15 @@ public class GUIroughdraft {
 		JMenuItem mntmOptions = new JMenuItem("Options");
 		mnFile.add(mntmOptions);
 		
+		JMenu mnActions = new JMenu("Actions");
+		menuBar.add(mnActions);
+		
+		JMenuItem mntmBuy = new JMenuItem("Buy");
+		mnActions.add(mntmBuy);
+		
+		JMenuItem mntmSell = new JMenuItem("Sell");
+		mnActions.add(mntmSell);
+		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 		
@@ -92,7 +101,7 @@ public class GUIroughdraft {
 		
 		JScrollBar scrollBar = new JScrollBar();
 		scrollBar.setBackground(Color.LIGHT_GRAY);
-		scrollBar.setBounds(303, 47, 21, 317);
+		scrollBar.setBounds(323, 47, 21, 317);
 		frmBgszStockSimulator.getContentPane().add(scrollBar);
 		
 		JTextArea txtrThisWillBe = new JTextArea();
@@ -105,34 +114,15 @@ public class GUIroughdraft {
 		
 		txtEnterYourText = new JTextField();
 		txtEnterYourText.setText("Enter your text here");
-		txtEnterYourText.setBounds(12, 377, 312, 22);
+		txtEnterYourText.setBounds(12, 377, 733, 22);
 		frmBgszStockSimulator.getContentPane().add(txtEnterYourText);
 		txtEnterYourText.setColumns(10);
 		
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
-		progressBar.setBounds(78, 412, 146, 14);
+		progressBar.setValue(75);
+		progressBar.setBounds(78, 412, 586, 14);
 		frmBgszStockSimulator.getContentPane().add(progressBar);
-		
-		JButton btnBuy = new JButton("Buy");
-		btnBuy.setBounds(562, 339, 97, 25);
-		frmBgszStockSimulator.getContentPane().add(btnBuy);
-		
-		JButton btnSell = new JButton("Sell");
-		btnSell.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnSell.setBounds(562, 376, 97, 25);
-		frmBgszStockSimulator.getContentPane().add(btnSell);
-		
-		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(387, 339, 97, 25);
-		frmBgszStockSimulator.getContentPane().add(btnSearch);
-		
-		JButton btnView = new JButton("View");
-		btnView.setBounds(387, 376, 97, 25);
-		frmBgszStockSimulator.getContentPane().add(btnView);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
@@ -160,7 +150,7 @@ public class GUIroughdraft {
 			}
 		));
 		table.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		table.setBounds(350, 51, 395, 254);
+		table.setBounds(350, 51, 395, 313);
 		frmBgszStockSimulator.getContentPane().add(table);
 		
 		JTextArea txtrValue = new JTextArea();

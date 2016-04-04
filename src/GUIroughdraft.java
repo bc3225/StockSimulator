@@ -1,11 +1,10 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JLabel;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+//import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
@@ -126,29 +125,28 @@ public class GUIroughdraft {
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Stock Name", "Stock Value", "Amount Owned", "Total Value"},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column"
-			}
-		));
+				new Object[][] {
+					{"Stock Name", "Stock Value", "Amount Owned", "Total Value"},
+					{" BAC", "$13.48", "4", "$53.92"},
+					{" RIG", "$8.89", "0", "$0.00"},
+					{" SUNE", "$0.59", "12", "$7.08"},
+					{" FCX", "$10.29", "2", "$20.58"},
+					{" PBR", "$5.86", "0", "$0.00"},
+					{" GE", "$31.83", "0", "$0.00"},
+					{" VALE", "$4.24", "24", "$101.76"},
+					{" VRX", "$27.07", "0", "$0.00"},
+					{" PFE", "$30.07", "0", "$0.00"},
+					{" CRC", "$1.05", "8", "$8.40"},
+					{" GGB", "$1.82", "0", "$0.00"},
+					{" CHK", "$4.01", "6", "$24.06"},
+					{" T", "$39.37", "0", "$0.00"},
+					{" F", "$13.35", "5", "$66.75"},
+					{" WLL", "$7.66", "0", "$0.00"},
+				},
+				new String[] {
+					"New column", "New column", "New column", "New column"
+				}
+			));
 		table.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		table.setBounds(350, 51, 395, 313);
 		frmBgszStockSimulator.getContentPane().add(table);

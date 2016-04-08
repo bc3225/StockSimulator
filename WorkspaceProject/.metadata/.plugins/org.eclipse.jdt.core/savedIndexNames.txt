@@ -1,18 +1,19 @@
-INDEX VERSION 1.127+C:\Users\student-10\git\StockSimulator\WorkspaceProject\.metadata\.plugins\org.eclipse.jdt.core
-3184717171.index
-2963538765.index
-3004383119.index
-1543766311.index
-349556966.index
-4237918392.index
-4232502288.index
-3544518797.index
-3793391456.index
-2330857962.index
-2775202610.index
-3867579341.index
-1106408436.index
-1217923329.index
-1442487239.index
-1248407149.index
-3398816544.index
+INDEX VERSION 1.127+C:\Users\Scott\Desktop\StockSimulator\WorkspaceProject\.metadata\.plugins\org.eclipse.jdt.core
+2442888519.index
+1677593041.index
+2153270132.index
+4078855296.index
+3465765727.index
+3814180264.index
+3724307573.index
+2334050384.index
+1851955243.index
+2979327570.index
+2563912980.index
+1416821754.index
+606802006.index
+3887496914.index
+48817752.index
+152244849.index
+1760935762.index
+2449793579.index

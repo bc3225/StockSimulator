@@ -28,7 +28,7 @@ public class GUIroughdraft {
 	 * @wbp.nonvisual location=53,14
 	 */
 	//private final JLabel lblBgszStockSimulator = DefaultComponentFactory.getInstance().createTitle("BGSZ Stock Simulator");
-	private JTextField txtEnterYourText;
+	private JTextField searchBar;
 	private JTable table;
 
 	/**
@@ -103,19 +103,26 @@ public class GUIroughdraft {
 		scrollBar.setBounds(323, 47, 21, 317);
 		frmBgszStockSimulator.getContentPane().add(scrollBar);
 		
-		JTextArea txtrThisWillBe = new JTextArea();
-		txtrThisWillBe.setEditable(false);
-		txtrThisWillBe.setLineWrap(true);
-		txtrThisWillBe.setWrapStyleWord(true);
-		txtrThisWillBe.setText("This will be a text field that displays all your actions and information about stocks, purchases, sales, errors, etc.");
-		txtrThisWillBe.setBounds(12, 47, 312, 317);
-		frmBgszStockSimulator.getContentPane().add(txtrThisWillBe);
+		JTextArea displayBox = new JTextArea();
+		displayBox.setEditable(false);
+		displayBox.setLineWrap(true);
+		displayBox.setWrapStyleWord(true);
+		displayBox.setText("This will be a text field that displays all your actions and information about stocks, purchases, sales, errors, etc.");
 		
-		txtEnterYourText = new JTextField();
-		txtEnterYourText.setText("Enter your text here");
-		txtEnterYourText.setBounds(12, 377, 733, 22);
-		frmBgszStockSimulator.getContentPane().add(txtEnterYourText);
-		txtEnterYourText.setColumns(10);
+		//when the user clicks the search button that is not there anymore 
+		//create a new instance of the getStockData class
+		//get the data from the input line something like  String userInput = searchBar.getText()
+		//pass that to the getData(userInput);
+		//set the displayBox.setText(the return from getData());
+		
+		displayBox.setBounds(12, 47, 312, 317);
+		frmBgszStockSimulator.getContentPane().add(displayBox);
+		
+		searchBar = new JTextField();
+		searchBar.setText("Enter your text here");
+		searchBar.setBounds(12, 377, 733, 22);
+		frmBgszStockSimulator.getContentPane().add(searchBar);
+		searchBar.setColumns(10);
 		
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);

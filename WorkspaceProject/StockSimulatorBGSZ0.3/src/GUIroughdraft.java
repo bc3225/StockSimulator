@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class GUIroughdraft {
@@ -28,8 +29,10 @@ public class GUIroughdraft {
 	 * @wbp.nonvisual location=53,14
 	 */
 	//private final JLabel lblBgszStockSimulator = DefaultComponentFactory.getInstance().createTitle("BGSZ Stock Simulator");
-	private JTextField searchBar;
+	private  JTextField searchBar;
 	private JTable table;
+	private  JTextField displayBox;
+	private  JButton searchButton;
 
 	/**
 	 * Launch the application. Testing Comment
@@ -37,12 +40,16 @@ public class GUIroughdraft {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				GUIroughdraft window = new GUIroughdraft();
 				try {
-					GUIroughdraft window = new GUIroughdraft();
+					window = new GUIroughdraft();
 					window.frmBgszStockSimulator.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
 			}
 		});
 	}
@@ -51,17 +58,23 @@ public class GUIroughdraft {
 	 * Create the application.
 	 */
 	public GUIroughdraft() {
-		initialize();
+		try {
+			initialize();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws IOException 
 	 */
-	private void initialize() {
+	private void initialize() throws IOException {
 		frmBgszStockSimulator = new JFrame();
 		frmBgszStockSimulator.getContentPane().setBackground(Color.GRAY);
 		frmBgszStockSimulator.setTitle("BGSZ Stock Simulator");
-		frmBgszStockSimulator.setBounds(100, 100, 775, 510);
+		frmBgszStockSimulator.setBounds(100, 100, 802, 510);
 		frmBgszStockSimulator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -109,25 +122,48 @@ public class GUIroughdraft {
 		displayBox.setWrapStyleWord(true);
 		displayBox.setText("This will be a text field that displays all your actions and information about stocks, purchases, sales, errors, etc.");
 		
-		//when the user clicks the search button that is not there anymore 
-		//create a new instance of the getStockData class
-		//get the data from the input line something like  String userInput = searchBar.getText()
-		//pass that to the getData(userInput);
-		//set the displayBox.setText(the return from getData());
-		
 		displayBox.setBounds(12, 47, 312, 317);
 		frmBgszStockSimulator.getContentPane().add(displayBox);
 		
 		searchBar = new JTextField();
 		searchBar.setText("Enter your text here");
-		searchBar.setBounds(12, 377, 733, 22);
+		searchBar.setBounds(12, 377, 637, 22);
 		frmBgszStockSimulator.getContentPane().add(searchBar);
 		searchBar.setColumns(10);
+		
+		JButton searchButton = new JButton();
+		searchButton.setText("Search");
+		searchButton.setBounds(654, 377, 93, 22);
+		frmBgszStockSimulator.getContentPane().add(searchButton);
+		searchButton.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				 
+				 String userInput = searchBar.getText();
+		       	
+						GetStockData gd = new GetStockData();
+						try {
+							gd.pullPriceData(userInput);
+							
+						} catch (IOException er) {
+							er.printStackTrace();
+							
+						}
+						
+						String output = Double.toString(gd.getPrice());;
+						if(output == "0"){
+							displayBox.setText("NO STOCK FOUND");
+						}
+						displayBox.setText("The Price for " + userInput + ": $" + output);
+						//get to print in the table.
+						//userInput = stock ticker 
+						//ouput = price
+		        }
+	      });
 		
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setStringPainted(true);
 		progressBar.setValue(75);
-		progressBar.setBounds(78, 412, 586, 14);
+		progressBar.setBounds(50, 412, 586, 14);
 		frmBgszStockSimulator.getContentPane().add(progressBar);
 		
 		table = new JTable();
@@ -180,4 +216,24 @@ public class GUIroughdraft {
 		lblPortfolioValue.setBounds(283, 15, 123, 16);
 		frmBgszStockSimulator.getContentPane().add(lblPortfolioValue);
 	}
+	
+/*	private class customListener implements ActionListener {
+	    private GUIroughdraft window;
+
+	    public customListener(GUIroughdraft window) {
+	        this.window = window;
+	    }
+
+	    public void actionPerformed(ActionEvent e) {
+       	 String userInput = window.searchBar.getText();
+				GetStockData gd = new GetStockData();
+				try {
+					gd.pullPriceData(userInput);
+				} catch (IOException er) {
+					er.printStackTrace();
+				}
+				String output = Double.toString(gd.getPrice());
+				window.displayBox.setText("The Price for " + userInput + ":" + output);
+        }
+	}*/
 }

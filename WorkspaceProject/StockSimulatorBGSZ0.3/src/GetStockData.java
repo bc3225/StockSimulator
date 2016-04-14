@@ -1,5 +1,5 @@
-//Graham Simpson 4/6/2016
-//Yahoo tool: http://www.jarloo.com/yahoo_finance/
+//Graham Simpson 4/13/2016
+//Yahoo API documentation: http://www.jarloo.com/yahoo_finance/
 import java.net.*;
 import java.io.*;
 
@@ -18,8 +18,23 @@ public class GetStockData{
 	    URLConnection yahooConnection = yahoofinancePrice.openConnection();
 	    BufferedReader in = new BufferedReader(new InputStreamReader(yahooConnection.getInputStream()));
 	    String inputLine=in.readLine();
-	    price = Double.parseDouble(inputLine);
-    	setPrice(price);	    //NOTE price=previous close in USD
+	    if(inputLine == "N/A"){
+	    	setPrice(0);
+	    	
+	    	/*//call the function that converts stocknames to tickers
+	    	GetStockTicker gts = new GetStockTicker();
+	    	String convertedTicker = gts.convertToTicker(inputLine);
+	    	if(!convertedTicker.contains("Could NOT find a ticker for")){
+	    		pullPriceData(convertedTicker);
+	    	}else{
+	    		setPrice(0);
+	    	}*/
+	    	
+	    }else{
+	    	price = Double.parseDouble(inputLine);
+	    	setPrice(price);
+	    }
+	    	    //NOTE price=previous close in USD
     	
     	URL yahoofinanceAvgDailyVol = new URL("http://finance.yahoo.com/d/quotes.csv?s="+t+"+"+"&f=a2");
     	URLConnection yahooConnection2 = yahoofinanceAvgDailyVol.openConnection();

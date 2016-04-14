@@ -13,7 +13,7 @@ public class GetStockTicker{
 	public String getTicker(){
 		return ticker;
 	}
-	public void pullPriceData(String t) throws IOException{
+	public String convertToTicker(String t) throws IOException{
 	    URL yahoofinancePrice = new URL("http://d.yimg.com/aq/autoc?query=" + t + "&region=US&lang=en-US");
 	    URLConnection yahooConnection = yahoofinancePrice.openConnection();
 	    BufferedReader in = new BufferedReader(new InputStreamReader(yahooConnection.getInputStream()));
@@ -23,9 +23,11 @@ public class GetStockTicker{
 	    	System.out.println(inputLine);
 	    	//parse the data and get the ticker
 	    	//send the ticker to the UI 
+	    	return ticker;
 	    }
 	    else{
-	    	//send error message to the UI 
+	    	//send error message to the UI
+	    	return ("Could NOT find a ticker for " + inputLine);
 	    }
 	    
 	    

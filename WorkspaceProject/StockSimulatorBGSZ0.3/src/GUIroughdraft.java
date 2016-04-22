@@ -13,12 +13,15 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JProgressBar;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollBar;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
@@ -85,9 +88,26 @@ public class GUIroughdraft {
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mnFile.add(mntmSave);
+		mntmSave.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                JFileChooser saveFile = new JFileChooser();
+                saveFile.setSelectedFile(new File(".csv"));
+                saveFile.showSaveDialog(null);
+            }
+        });
 		
 		JMenuItem mntmLoad = new JMenuItem("Load");
 		mnFile.add(mntmLoad);
+		mntmLoad.addActionListener(new ActionListener() {
+
+	            @Override
+	            public void actionPerformed(ActionEvent arg0) {
+	                JFileChooser openFile = new JFileChooser();
+	                openFile.showOpenDialog(null);
+	            }
+	        });
 		
 		JMenuItem mntmOptions = new JMenuItem("Options");
 		mnFile.add(mntmOptions);

@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 //import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.BorderLayout;
@@ -20,8 +21,11 @@ import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
@@ -92,9 +96,35 @@ public class GUIroughdraft {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                JFileChooser saveFile = new JFileChooser();
-                saveFile.setSelectedFile(new File(".csv"));
-                saveFile.showSaveDialog(null);
+                JFileChooser saveFile = new JFileChooser(new File("c:\\"));
+                saveFile.setFileFilter(new FileTypeFilter(".csv", "Comma-separated values"));
+                int result = saveFile.showSaveDialog(null);
+                if(result == JFileChooser.APPROVE_OPTION) {
+                	File fi = new File(saveFile.getSelectedFile() +".csv");
+                	try {
+                		TableModel model = table.getModel();
+                        FileWriter excel = new FileWriter(fi);
+
+                        for(int i = 0; i < model.getColumnCount(); i++){
+                            excel.write(model.getColumnName(i) + "\t");
+                        }
+
+                        excel.write("\n");
+
+                        for(int i=0; i< model.getRowCount(); i++) {
+                            for(int j=0; j < model.getColumnCount(); j++) {
+                                excel.write(model.getValueAt(i,j).toString()+"\t");
+                            }
+                            excel.write("\n");
+                        }
+
+                        excel.close();
+                	} catch (Exception e2) {
+                		JOptionPane.showMessageDialog(null, e2.getMessage());
+                	}
+                }
+                
+                
             }
         });
 		

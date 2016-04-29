@@ -37,18 +37,29 @@ public class Portfolio{
 		String[] holdings = getHoldings();
 			
 	}
-	public void readFile(String filePath) throws IOException{
+	public void readFile(String filePath){
 		//String testFile = "C:\\Code Workspace\\StockSimulator\\WorkspaceProject\\StockSimulatorBGSZ0.3\\bgszExchangePortfolio.csv";
 		BufferedReader br = null;
 		String line = "";
 		String delimiter = ",";
 		
-		br = new BufferedReader(new FileReader(filePath));
-		while ((line = br.readLine()) != null) {
+		try {
+			br = new BufferedReader(new FileReader(filePath));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while ((line = br.readLine()) != null) {
 
-			String[] stocks = line.split(delimiter);
-			System.out.println("Ticker= " + stocks[0] + "; NumShares= " 
-									+ stocks[1] + "; Price= " + stocks[2]);
+				String[] stocks = line.split(delimiter);
+				/*System.out.println("Ticker= " + stocks[0] + "; NumShares= " 
+										+ stocks[1] + "; Price= " + stocks[2]);*/
+				setHoldings(stocks);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

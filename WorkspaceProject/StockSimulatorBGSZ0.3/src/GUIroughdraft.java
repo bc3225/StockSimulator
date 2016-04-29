@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 public class GUIroughdraft {
@@ -40,6 +41,7 @@ public class GUIroughdraft {
 	private JTable table;
 	private  JTextField displayBox;
 	private  JButton searchButton;
+	public static String pathName;
 
 	/**
 	 * Launch the application. Testing Comment
@@ -135,7 +137,11 @@ public class GUIroughdraft {
 	            @Override
 	            public void actionPerformed(ActionEvent arg0) {
 	                JFileChooser openFile = new JFileChooser();
-	                openFile.showOpenDialog(null);
+	                int option = openFile.showOpenDialog(null);
+	                if (option == JFileChooser.APPROVE_OPTION) {
+	                    File selectedFile = openFile.getSelectedFile();
+	                    pathName = selectedFile.getAbsolutePath();
+	                }
 	            }
 	        });
 		
@@ -200,10 +206,11 @@ public class GUIroughdraft {
 						}
 						
 						String output = Double.toString(gd.getPrice());;
+						System.out.println(output);
 						if(output == "0"){
-							displayBox.setText("NO STOCK FOUND");
+							displayBox.append("NO STOCK FOUND");
 						}
-						displayBox.setText("The Price for " + userInput + ": $" + output);
+						displayBox.append("\n The Price for " + userInput + ": $" + output);
 						//get to print in the table.
 						//userInput = stock ticker 
 						//ouput = price

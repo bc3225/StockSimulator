@@ -108,10 +108,6 @@ public class Portfolio{
 					if(holdings[k] == s){
 						// it exists as a holding already and we
 						//need to increment the number of shares
-					}else{
-						// it does not exist and we want to it to the file
-						holdings[k+1] = s;
-						
 					}
 				}
 			}

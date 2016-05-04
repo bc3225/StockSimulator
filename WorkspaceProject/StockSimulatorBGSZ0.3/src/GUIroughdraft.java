@@ -144,6 +144,20 @@ public class GUIroughdraft {
 	                if (option == JFileChooser.APPROVE_OPTION) {
 	                    File selectedFile = openFile.getSelectedFile();
 	                    pathName = selectedFile.getAbsolutePath();
+	                    Portfolio p = new Portfolio();
+	                    p.readFile(pathName);
+	                    String[] holds = p.getHoldings();
+	               
+	                	  /* for(int i=0; i< holds.length; i++) {
+	                            for(int j=0; j < holds.length; j++) {
+	                               // excel.write(model.getValueAt(i,j).toString()+"\t");
+	                            	table.setValueAt(holds[i], j, i);
+	                            }
+	                            //excel.write("\n");
+	                        }
+	                        */
+
+	                    
 	                }
 	            }
 	        });

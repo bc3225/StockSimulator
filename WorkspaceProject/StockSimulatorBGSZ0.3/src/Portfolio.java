@@ -74,6 +74,12 @@ public class Portfolio{
 				portfolioValue -=value;
 				setCash(cash);	
 				setHoldingsValue(portfolioValue);
+				for(int k=0; k<holdings.length; k++){
+					if(holdings[k] == s){
+						holdings[k] = "";
+						setHeldTickers(holdings);
+					}
+				}
 			}
 		}
 	}
@@ -97,6 +103,13 @@ public class Portfolio{
 				portfolioValue +=value;
 				setCash(cash);	
 				setHoldingsValue(portfolioValue);
+				// write ticker to the array 
+				for(int k =0; k<holdings.length; k++){
+					if(holdings[k] == s){
+						// it exists as a holding already and we
+						//need to increment the number of shares
+					}
+				}
 			}
 		}
 		

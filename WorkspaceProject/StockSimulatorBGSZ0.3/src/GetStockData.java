@@ -36,12 +36,12 @@ public class GetStockData{
 	    }
 	    	    //NOTE price=previous close in USD
     	
-    	URL yahoofinanceAvgDailyVol = new URL("http://finance.yahoo.com/d/quotes.csv?s="+t+"+"+"&f=a2");
+    	/*URL yahoofinanceAvgDailyVol = new URL("http://finance.yahoo.com/d/quotes.csv?s="+t+"+"+"&f=a2");
     	URLConnection yahooConnection2 = yahoofinanceAvgDailyVol.openConnection();
     	BufferedReader in2 = new BufferedReader(new InputStreamReader(yahooConnection2.getInputStream()));
  	    String inputLine2=in2.readLine();
 	    avgDailyVol = Double.parseDouble(inputLine2);
-	    setAvgDailyVol(avgDailyVol);
+	    setAvgDailyVol(avgDailyVol);*/
 	}
 	public double getAvgDailyVol() {
 		return avgDailyVol;

@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 //import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.BorderLayout;
@@ -13,13 +14,20 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.JProgressBar;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollBar;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 public class GUIroughdraft {
@@ -33,6 +41,7 @@ public class GUIroughdraft {
 	private JTable table;
 	private  JTextField displayBox;
 	private  JButton searchButton;
+	public static String pathName;
 
 	/**
 	 * Launch the application. Testing Comment
@@ -85,9 +94,56 @@ public class GUIroughdraft {
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mnFile.add(mntmSave);
+		mntmSave.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                JFileChooser saveFile = new JFileChooser(new File("c:\\"));
+                saveFile.setFileFilter(new FileTypeFilter(".csv", "Comma-separated values"));
+                int result = saveFile.showSaveDialog(null);
+                if(result == JFileChooser.APPROVE_OPTION) {
+                	File fi = new File(saveFile.getSelectedFile() +".csv");
+                	try {
+                		TableModel model = table.getModel();
+                        FileWriter excel = new FileWriter(fi);
+
+                        for(int i = 0; i < model.getColumnCount(); i++){
+                            excel.write(model.getColumnName(i) + "\t");
+                        }
+
+                        excel.write("\n");
+
+                        for(int i=0; i< model.getRowCount(); i++) {
+                            for(int j=0; j < model.getColumnCount(); j++) {
+                                excel.write(model.getValueAt(i,j).toString()+"\t");
+                            }
+                            excel.write("\n");
+                        }
+
+                        excel.close();
+                	} catch (Exception e2) {
+                		JOptionPane.showMessageDialog(null, e2.getMessage());
+                	}
+                }
+                
+                
+            }
+        });
 		
 		JMenuItem mntmLoad = new JMenuItem("Load");
 		mnFile.add(mntmLoad);
+		mntmLoad.addActionListener(new ActionListener() {
+
+	            @Override
+	            public void actionPerformed(ActionEvent arg0) {
+	                JFileChooser openFile = new JFileChooser();
+	                int option = openFile.showOpenDialog(null);
+	                if (option == JFileChooser.APPROVE_OPTION) {
+	                    File selectedFile = openFile.getSelectedFile();
+	                    pathName = selectedFile.getAbsolutePath();
+	                }
+	            }
+	        });
 		
 		JMenuItem mntmOptions = new JMenuItem("Options");
 		mnFile.add(mntmOptions);
@@ -150,10 +206,11 @@ public class GUIroughdraft {
 						}
 						
 						String output = Double.toString(gd.getPrice());;
+						System.out.println(output);
 						if(output == "0"){
-							displayBox.setText("NO STOCK FOUND");
+							displayBox.append("NO STOCK FOUND");
 						}
-						displayBox.setText("The Price for " + userInput + ": $" + output);
+						displayBox.append("\n The Price for " + userInput + ": $" + output);
 						//get to print in the table.
 						//userInput = stock ticker 
 						//ouput = price

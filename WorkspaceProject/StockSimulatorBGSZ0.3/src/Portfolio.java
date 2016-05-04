@@ -1,5 +1,5 @@
 //Graham Simpson 
-//4/25/16
+//5/4/16
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -10,6 +10,7 @@ public class Portfolio{
 	private double cash;
 	private double holdingsValue;
 	private String[] holdings;
+	private String[] heldTickers;
 	
 	public double getCash(){
 		return cash;
@@ -33,22 +34,116 @@ public class Portfolio{
 	public double getHoldingsValue(){
 		return holdingsValue;
 	}
-	public void calcHoldings(){
-		String[] holdings = getHoldings();
-			
+	public void setHeldTickers(String[] tics){
+		heldTickers = tics;
 	}
-	public void readFile(String filePath) throws IOException{
+	public String[] getHeldTickers(){
+		return heldTickers;
+	}
+	public void collectHeldTickers(){
+		String[] h = getHoldings();
+		int i=0;
+		String[] collectedTickers = new String[h.length];
+		while(i<h.length){
+			if(i%3 == 0){
+				collectedTickers[i] = h[i];
+				i++;
+			}else{
+				i++;
+			}
+		}
+		setHeldTickers(collectedTickers);
+	}
+	
+	public void sellStock(String s){
+		String[] ticker = getHoldings();
+		GetStockData gsd = new GetStockData();
+		for(int i=0; i<ticker.length; i++){
+			if(holdings[i] == s){
+				try {
+					gsd.pullPriceData(s);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				double value = gsd.getPrice();
+				double cash = getCash(); 
+				double portfolioValue = getHoldingsValue();
+				cash+=value;
+				portfolioValue -=value;
+				setCash(cash);	
+				setHoldingsValue(portfolioValue);
+			}
+		}
+	}
+	
+	public void buyStock(String s){
+		String[] ticker = getHoldings();
+		GetStockData gsd = new GetStockData();
+		for(int i=0; i<ticker.length; i++){
+			if(holdings[i] == s){
+				try {
+					gsd.pullPriceData(s);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				double value = gsd.getPrice();
+				double cash = getCash(); 
+				double portfolioValue = getHoldingsValue();
+				cash-=value;
+				portfolioValue +=value;
+				setCash(cash);	
+				setHoldingsValue(portfolioValue);
+			}
+		}
+		
+	}
+	
+	public void calcHoldings(){
+		String[] h = getHoldings();
+		double cashMoney=0;
+		String[] collectedTickers = getHeldTickers();
+		GetStockData gsd = new GetStockData();
+		for(int k=0; k<collectedTickers.length; k++){
+			try {
+				gsd.pullPriceData(collectedTickers[k]);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			double value = gsd.getPrice();
+			cashMoney+=value;
+		}		
+		setHoldingsValue(cashMoney);		
+	}
+	public void readFile(String filePath){
 		//String testFile = "C:\\Code Workspace\\StockSimulator\\WorkspaceProject\\StockSimulatorBGSZ0.3\\bgszExchangePortfolio.csv";
 		BufferedReader br = null;
 		String line = "";
 		String delimiter = ",";
 		
-		br = new BufferedReader(new FileReader(filePath));
-		while ((line = br.readLine()) != null) {
+		try {
+			br = new BufferedReader(new FileReader(filePath));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while ((line = br.readLine()) != null) {
 
-			String[] stocks = line.split(delimiter);
-			System.out.println("Ticker= " + stocks[0] + "; NumShares= " 
-									+ stocks[1] + "; Price= " + stocks[2]);
+				String[] stocks = line.split(delimiter);
+				/*System.out.println("Ticker= " + stocks[0] + "; NumShares= " 
+										+ stocks[1] + "; Price= " + stocks[2]);*/
+				setHoldings(stocks);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
+
+

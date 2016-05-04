@@ -38,6 +38,8 @@ public class GUIroughdraft {
 	 */
 	//private final JLabel lblBgszStockSimulator = DefaultComponentFactory.getInstance().createTitle("BGSZ Stock Simulator");
 	private  JTextField searchBar;
+	private JTextField buyBar;
+	private JTextField sellBar;
 	private JTable table;
 	private  JTextField displayBox;
 	private  JButton searchButton;
@@ -85,6 +87,7 @@ public class GUIroughdraft {
 		frmBgszStockSimulator.setTitle("BGSZ Stock Simulator");
 		frmBgszStockSimulator.setBounds(100, 100, 802, 510);
 		frmBgszStockSimulator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmBgszStockSimulator.setResizable(false);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmBgszStockSimulator.setJMenuBar(menuBar);
@@ -153,9 +156,184 @@ public class GUIroughdraft {
 		
 		JMenuItem mntmBuy = new JMenuItem("Buy");
 		mnActions.add(mntmBuy);
+		mntmBuy.addActionListener(new ActionListener()
+	        {
+	            @Override
+	            public void actionPerformed(ActionEvent arg0)
+	            {
+	                JFrame frmBgszStockSimulatorBuy = new JFrame();
+	                frmBgszStockSimulatorBuy.getContentPane().setBackground(Color.GRAY);
+	                frmBgszStockSimulatorBuy.setTitle("Buy Stocks");
+	                frmBgszStockSimulatorBuy.setVisible(true);
+	                frmBgszStockSimulatorBuy.setBounds(100, 100, 350, 250);
+	                frmBgszStockSimulatorBuy.setResizable(false);
+	                
+	                JMenuBar menuBuyBar = new JMenuBar();
+	                frmBgszStockSimulatorBuy.setJMenuBar(menuBuyBar);
+	                
+	                JMenu mnFile = new JMenu("File");
+	                menuBuyBar.add(mnFile);
+	                
+	                JMenuItem mntmWhatever = new JMenuItem("Do what you want here");
+	                mnFile.add(mntmWhatever);
+	                
+
+	                searchBar = new JTextField();
+	                searchBar.setText("Enter the stock ticker here");
+	                searchBar.setBounds(5, 50, 205, 22);
+	                frmBgszStockSimulatorBuy.add(searchBar, BorderLayout.PAGE_START);
+	                searchBar.setColumns(10);
+	                
+	                buyBar = new JTextField();
+	                buyBar.setText("How much stock would you like to buy?");
+	                buyBar.setBounds(5, 100,  205,  22);
+	                frmBgszStockSimulatorBuy.add(buyBar, BorderLayout.PAGE_START);
+	                buyBar.setColumns(10);
+	                
+
+	                JTextArea displayBoxBuy = new JTextArea();
+	                displayBoxBuy.setEditable(false);
+	                displayBoxBuy.setLineWrap(true);
+	                displayBoxBuy.setWrapStyleWord(true);
+	                displayBoxBuy.setText("This will be a text field that displays" + "\n" + "all your actions and information about stocks, purchases, sales, errors, etc.");
+	//
+	                displayBoxBuy.setBounds(12, 47, 300, 150);
+	                
+	                JButton buyStockButton = new JButton();
+	                buyStockButton.setText("Buy Stock");
+	                buyStockButton.setBounds(215,100,93,22);
+	                frmBgszStockSimulatorBuy.getContentPane().add(buyStockButton, BorderLayout.PAGE_START);
+	                
+	                JButton searchButton = new JButton();
+	                searchButton.setText("Search");
+	                searchButton.setBounds(215, 50, 93, 22);
+	                frmBgszStockSimulatorBuy.getContentPane().add(searchButton,BorderLayout.PAGE_START);
+	                searchButton.addActionListener(new ActionListener() 
+	                {
+	                     public void actionPerformed(ActionEvent e) 
+	                     {
+
+	                         String userInput = searchBar.getText();
+
+	                                GetStockData gd = new GetStockData();
+	                                try 
+	                                {
+	                                    gd.pullPriceData(userInput);
+	            
+	                                } 
+	                                catch (IOException er) 
+	                                {
+	                                    er.printStackTrace();
+	            
+	                                }
+	            
+	                                String output = Double.toString(gd.getPrice());;
+	                                if(output == "0")
+	                                {
+	                                    displayBoxBuy.setText("NO STOCK FOUND");
+	                                }
+	                                displayBoxBuy.setText("The Price for " + userInput + ": $" + output);
+	                                //get to print in the table.
+	                                //userInput = stock ticker 
+	                                //ouput = price
+	                        }
+	                  });
+
+	                frmBgszStockSimulatorBuy.getContentPane().add(displayBoxBuy, BorderLayout.PAGE_START);   //This is where BorderLayout.PAGE_START is added.       
+	            }
+
+
+	        }); 
 		
 		JMenuItem mntmSell = new JMenuItem("Sell");
 		mnActions.add(mntmSell);
+		mntmSell.addActionListener(new ActionListener()
+	    {
+	        @Override
+	        public void actionPerformed(ActionEvent arg0)
+	        {
+	            JFrame frmBgszStockSimulatorSell = new JFrame();
+	            frmBgszStockSimulatorSell.getContentPane().setBackground(Color.GRAY);
+	            frmBgszStockSimulatorSell.setTitle("Sell Stocks");
+	            frmBgszStockSimulatorSell.setVisible(true);
+	            frmBgszStockSimulatorSell.setBounds(100, 100, 350, 250);
+	            frmBgszStockSimulatorSell.setResizable(false);
+	            
+	            JMenuBar menuSellBar = new JMenuBar();
+	            frmBgszStockSimulatorSell.setJMenuBar(menuSellBar);
+	            
+	            JMenu mnFile = new JMenu("File");
+	            menuSellBar.add(mnFile);
+	            
+	            JMenuItem mntmWhatever = new JMenuItem("Do what you want here");
+	            mnFile.add(mntmWhatever);
+
+	            searchBar = new JTextField();
+	            searchBar.setText("Enter the stock ticker here");
+	            searchBar.setBounds(5, 50, 205, 22);
+	            frmBgszStockSimulatorSell.add(searchBar, BorderLayout.PAGE_START);
+	            searchBar.setColumns(10);
+	            
+	            sellBar = new JTextField();
+	            sellBar.setText("How much stock would you like to sell?");
+	            sellBar.setBounds(5, 100,  205,  22);
+	            frmBgszStockSimulatorSell.add(sellBar, BorderLayout.PAGE_START);
+	            sellBar.setColumns(10);
+
+	            JTextArea displayBoxSell = new JTextArea();
+	            displayBoxSell.setEditable(false);
+	            displayBoxSell.setLineWrap(true);
+	            displayBoxSell.setWrapStyleWord(true);
+	            displayBoxSell.setText("This will be a text field that displays all your actions and information about stocks, purchases, sales, errors, etc.");
+
+	            displayBoxSell.setBounds(12, 47, 300, 150);
+	            
+	            JButton sellStockButton = new JButton();
+                sellStockButton.setText("Buy Stock");
+                sellStockButton.setBounds(215,100,93,22);
+                frmBgszStockSimulatorSell.getContentPane().add(sellStockButton, BorderLayout.PAGE_START);
+	            
+	            JButton searchButton = new JButton();
+	            searchButton.setText("Search");
+	            searchButton.setBounds(215, 50, 93, 22);
+	            frmBgszStockSimulatorSell.getContentPane().add(searchButton, BorderLayout.PAGE_START);
+	            searchButton.addActionListener(new ActionListener() 
+	            {
+	                 public void actionPerformed(ActionEvent e) 
+	                 {
+
+	                     String userInput = searchBar.getText();
+
+	                            GetStockData gd = new GetStockData();
+	                            try 
+	                            {
+	                                gd.pullPriceData(userInput);
+	        
+	                            } 
+	                            catch (IOException er) 
+	                            {
+	                                er.printStackTrace();
+	        
+	                            }
+	        
+	                            String output = Double.toString(gd.getPrice());;
+	                            if(output == "0")
+	                            {
+	                                displayBoxSell.setText("NO STOCK FOUND");
+	                            }
+	                            displayBoxSell.setText("The Price for " + userInput + ": $" + output);
+	                            //get to print in the table.
+	                            //userInput = stock ticker 
+	                            //ouput = price
+	                    }
+	              });
+	            
+
+	            frmBgszStockSimulatorSell.getContentPane().add(displayBoxSell, BorderLayout.PAGE_START);   
+	        }
+
+
+	    });
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
